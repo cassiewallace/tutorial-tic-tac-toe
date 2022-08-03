@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -72,7 +72,10 @@ class Game extends React.Component {
   }
 
   jumpTo(step) {
-    this.setState({ stepNumber: step, xIsNext: step % 2 === 0 });
+    this.setState({
+      stepNumber: step,
+      xIsNext: step % 2 === 0,
+    });
   }
 
   render() {
@@ -82,13 +85,18 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const position = step.position;
-      const desc = move
-        ? "Go to move #" + move + " @ " + position
-        : "Go to start";
+      const desc = move ? "Move #" + move + " @ " + position : "Start";
 
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button
+            style={{
+              fontWeight: move === this.state.stepNumber ? "bold" : "normal",
+            }}
+            onClick={() => this.jumpTo(move)}
+          >
+            {desc}
+          </button>
         </li>
       );
     });
